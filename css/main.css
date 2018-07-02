@@ -1,0 +1,22 @@
+.canvas-wrapper {
+  overflow: auto;
+  margin-top: 24px;
+  margin-bottom: 24px;
+}
+
+canvas{
+  display: block;
+}
+
+.add-txt-btn {
+    padding-top: 43px;
+}
+
+.gen-btn {
+    padding-top: 43px;
+}
+
+#error-message {
+    display: none;
+    color: red;
+}

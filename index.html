@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Gen Edit Shot</title>
+    <link rel="stylesheet" type="text/css" href="css/bulma.min.css" />
+    <link rel="stylesheet" type="text/css" href="css/main.css" />
+    <script type="text/javascript" src="js/jszip.js"></script>
+    <script type="text/javascript" src="js/FileSaver.js"></script>
+</head>
+<body>
+    <div class="container">
+        <div class="columns">
+            <div class="column">
+                <div class="field">
+                  <label class="label">Title</label>
+                  <div class="control">
+                    <input class="input" id="titleBox" type="text" placeholder="s0010" />
+                  </div>
+                </div>
+            </div>
+
+            <div class="column">
+                <div class="field">
+                  <label class="label">BG Color</label>
+                  <div class="control">
+                    <input type="color" id="colorBox" />
+                  </div>
+                </div>
+            </div>
+
+            <div class="column">
+                <div class="field">
+                  <label class="label">Font Color</label>
+                  <div class="control">
+                    <input type="color" id="fontColorBox" />
+                  </div>
+                </div>
+            </div>
+
+            <div class="column">
+                <div class="field">
+                  <label class="label">Font Size</label>
+                  <div class="control">
+                    <div class="select">
+                      <select id="fontSizeBox">
+                        <option>14</option>
+                        <option>18</option>
+                        <option>22</option>
+                        <option>24</option>
+                        <option>28</option>
+                        <option>32</option>
+                        <option>36</option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+            </div>
+
+            <div class="column">
+                <div class="field">
+                  <label class="label">คำนำหน้า:</label>
+                  <div class="control">
+                    <input class="input" id="firstTxtBox" type="text" placeholder="s" />
+                  </div>
+                </div>
+            </div>
+
+            <div class="column">
+                <div class="field">
+                  <label class="label">จำนวนตัวเลข:</label>
+                  <div class="control">
+                    <input class="number" id="numTxtBox" type="number" placeholder="5" value="4" />
+                  </div>
+                </div>
+            </div>
+
+            <div class="column">
+                <div class="field">
+                  <label class="label">Start:</label>
+                  <div class="control">
+                    <input class="input" id="startNumBox" type="text" placeholder="0010" />
+                  </div>
+                </div>
+            </div>
+
+            <div class="column">
+                <div class="field">
+                  <label class="label">End:</label>
+                  <div class="control">
+                    <input class="input" id="startEndBox" type="text" placeholder="0080" />
+                  </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="columns">
+            <div class="column is-2 is-offset-3">
+                <div class="field">
+                  <label class="label">Width</label>
+                  <div class="control">
+                    <input class="input" id="widthBox" type="number" placeholder="3840px" max="10000" />
+                  </div>
+                </div>
+            </div>
+
+            <div class="column is-2">
+                <div class="field">
+                  <label class="label">Height</label>
+                  <div class="control">
+                    <input class="input" id="heightBox" type="number" placeholder="2160px" max="10000" />
+                  </div>
+                </div>
+            </div>
+
+            <div class="column is-1 add-txt-btn">
+                <button class="button is-info" id="addTextBtn">Add Text</button>
+            </div>
+
+            <div class="column is-1 gen-btn">
+                <button class="button is-info" id="genMockBtn">dowload</button>
+            </div>
+        </div>
+
+        <div id="error-message">
+            <center>
+                กรุณาใส่ข้อมูลให้ครบถ้วน
+            </center>
+        </div>
+    </div>
+
+    <div class="container is-fluid canvas-wrapper">
+        <canvas id="myCanvas" width="800" height="600" style="border:1px solid #d3d3d3;">
+            Your browser does not support the HTML5 canvas tag.</canvas>
+    </div>
+    <script src="js/app.js"></script>
+</body>
+</html>
