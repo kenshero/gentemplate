@@ -1,8 +1,8 @@
 var myCanvas = document.getElementById("myCanvas")
 var myContext = myCanvas.getContext("2d")
 // document.getElementById("mytext").value = "My value"
-var titleBox = document.getElementById("titleBox")
-var colorBox = document.getElementById("colorBox")
+// var titleBox = document.getElementById("titleBox")
+// var colorBox = document.getElementById("colorBox")
 var fontColorBox = document.getElementById("fontColorBox")
 var fontSizeBox = document.getElementById("fontSizeBox")
 var firstTxtBox = document.getElementById("firstTxtBox")
@@ -11,6 +11,13 @@ var startNumBox = document.getElementById("startNumBox")
 var startEndBox = document.getElementById("startEndBox")
 var widthBox = document.getElementById("widthBox")
 var heightBox = document.getElementById("heightBox")
+var posXBox = document.getElementById("posXBox")
+var posYBox = document.getElementById("posYBox")
+var vdoWidthBox = document.getElementById("vdoWidthBox")
+var vdoHeightBox = document.getElementById("vdoHeightBox")
+var genMockBtn = document.getElementById("genMockBtn")
+var addTextBtn = document.getElementById("addTextBtn")
+
 var mouseIsDown, txtPosX = 10, txtPosY = 50
 
 myCanvas.addEventListener("mousedown", mouseDown, false);
@@ -22,9 +29,9 @@ init_template()
 
 function init_template() {
     fontColorBox.value = "#ffffff"
-    myCanvas.style.width = "3840px"
-    myCanvas.style.height = "2160px"
-    myContext.fillStyle = "black"
+    myCanvas.setAttribute('width', 3840)
+    myCanvas.setAttribute('height', 2160)
+    myContext.fillStyle = "#ddd"
     myContext.fillRect(0, 0, myCanvas.width, myCanvas.height)
     document.getElementById("genMockBtn").disabled = true
 }
@@ -69,34 +76,86 @@ function getHeightBox() {
     return heightBox.value
 }
 
+function getPosXBox() {
+    return posXBox.value
+}
+
+function getPosYBox() {
+    return posYBox.value
+}
+
+function getVdoWidthBox() {
+    return vdoWidthBox.value
+}
+
+function getVdoHeightBox() {
+    return vdoHeightBox.value
+}
+
 function setWidthBox() {
     var width = getWidthBox()
-    myCanvas.style.width = `${width}px`
+    myCanvas.setAttribute('width', width)
 }
 
 function setHeightBox() {
     var height = getHeightBox()
-    myCanvas.style.height = `${height}px`
+    myCanvas.setAttribute('height', height)
 }
 
-function addText() {
-    myContext.clearRect(0, 0, myCanvas.width, myCanvas.height)
-    var bgColor = getBGColor()
+function getShotTitle(shotNumber) {
+    var firstText = getFirstTxtBox()
+    var shotTitle = `${firstText}${shotNumber}`
+    return shotTitle
+}
 
-    myContext.fillStyle = bgColor
+function drawLineVdo() {
+    var vdoPosX = getVdoWidthBox()
+    var vdoPosY = getVdoHeightBox()
+    var height = getHeightBox()
+    var distanceVdoLine = (height - vdoPosY) /2
+    myContext.beginPath()
+    myContext.moveTo(0, distanceVdoLine)
+    myContext.lineTo(vdoPosX, distanceVdoLine)
+
+    myContext.moveTo(0, height - distanceVdoLine)
+    myContext.lineTo(vdoPosX, height - distanceVdoLine)
+    myContext.lineWidth = 1
+    myContext.strokeStyle = '#ff0000'
+    myContext.stroke()
+}
+
+function previewText(shotTitle) {
+    myContext.clearRect(0, 0, myCanvas.width, myCanvas.height)
+    // var bgColor = getBGColor()
+
+    myContext.fillStyle = "#ddd"
     myContext.fillRect(0, 0, myCanvas.width, myCanvas.height)
 
-    var title = getName()
+    drawLineVdo()
+    // var title = getName()
     var fontSize = getFontSize()
     var fontColor = getFontColorBox()
     myContext.font = `${fontSize}px Comic Sans MS`
     myContext.fillStyle = fontColor
-    myContext.fillText(title, txtPosX, txtPosY)
+    myContext.fillText(shotTitle, txtPosX, txtPosY)
+}
+
+function genTemplateShot(shotTitle) {
+    myContext.clearRect(0, 0, myCanvas.width, myCanvas.height)
+    myContext.fillStyle = 'rgba(0,0,0,0)';
+    myContext.fillRect(0, 0, myCanvas.width, myCanvas.height)
+
+    // var title = getName()
+    var fontSize = getFontSize()
+    var fontColor = getFontColorBox()
+    myContext.font = `${fontSize}px Comic Sans MS`
+    myContext.fillStyle = fontColor
+    myContext.fillText(shotTitle, txtPosX, txtPosY)
 }
 
 function checkValidate() {
-    var title = getName()
-    var color = getBGColor()
+    // var title = getName()
+    // var color = getBGColor()
     var fontColor = getFontColorBox()
     var fontSize = getFontSize()
     var firstText = getFirstTxtBox()
@@ -105,7 +164,7 @@ function checkValidate() {
     var startEnd = getStartEnd()
     var width = getWidthBox()
     var height = getHeightBox()
-    if (!title || !color || !fontColor || !fontSize || !firstText || !numTxt || !startNum || !startEnd || !width || !height) {
+    if (!fontColor || !fontSize || !firstText || !numTxt || !startNum || !startEnd || !width || !height) {
         return false
     }
     return true
@@ -114,17 +173,30 @@ function checkValidate() {
 function generateMockShot() {
     console.log("mock ...")
     // download(myCanvas, 'myimage.png');
-
-    var imgData = myCanvas.toDataURL("image/png;base64");
+    var start = parseInt(getStartNum())
+    var end = parseInt(getStartEnd())
+    var numX = parseInt(getNumTxt())
+    // var count = 0
     var zip = new JSZip();
-    var img = zip.folder("images");
-    img.file("smile.png", imgData);
-    zip.generateAsync({type:"blob"})
-    .then(function(content) {
-        // see FileSaver.js
-        saveAs(content, "example.zip");
-    });
+    var zipFolder = zip.folder("images");
 
+    for (var i = start; start <= end; start++) {
+        // console.log(start.toString().padStart(numX, "0"))
+        var shotNumber = start.toString().padStart(numX, "0")
+        var savable = new Image();
+        var shotTitle = getShotTitle(shotNumber)
+        genTemplateShot(shotTitle)
+        savable.src = myCanvas.toDataURL();
+        zipFolder.file(`${shotNumber}.png`, savable.src.substr(savable.src.indexOf(',') + 1), {base64: true});
+        if (start == end) {
+            zip.generateAsync({type:"blob"})
+            .then(function(content) {
+                saveAs(content, "template_shots.zip")
+                // console.log("end load")
+                // genMockBtn.classList.remove("is-loading")
+            });
+        }
+    }
 }
 
 // function download(canvas, filename) {
@@ -147,7 +219,9 @@ function generateMockShot() {
 addTextBtn.addEventListener('click', () => {
     var isValid = checkValidate()
     if (isValid) {
-        addText()
+        var startNum = getStartNum()
+        var shotTitle = getShotTitle(startNum)
+        previewText(shotTitle)
         document.getElementById("error-message").style.display = 'none'
         document.getElementById("genMockBtn").disabled = false
     } else {
@@ -156,6 +230,7 @@ addTextBtn.addEventListener('click', () => {
 });
 
 genMockBtn.addEventListener('click', () => {
+    // genMockBtn.className += " is-loading"
     generateMockShot()
 });
 
@@ -166,6 +241,20 @@ widthBox.addEventListener('change', () => {
 heightBox.addEventListener('change', () => {
     setHeightBox()
 });
+
+posXBox.addEventListener('change', () => {
+    changePos()
+});
+
+posYBox.addEventListener('change', () => {
+    changePos()
+});
+
+// var testLoad = document.getElementById("testLoad")
+// testLoad.addEventListener('click', () => {
+//     testLoad.className += " is-loading"
+//     console.log("ssssssssssssssss")
+// });
 
 function getMousePos(canvas, evt) {
     var rect = canvas.getBoundingClientRect();
@@ -186,16 +275,27 @@ function mouseDown() {
 }
 
 function mouseXY(e) {
-    e.preventDefault()
-    var mousePos = getMousePos(myCanvas, e);
-    txtPosX = mousePos.x
-    txtPosY = mousePos.y
-
-    ShowPos();
+    ShowPos(e);
 }
 
-function ShowPos() {
+function ShowPos(e) {
     if(mouseIsDown) {
-        addText();
+        posXBox.value = txtPosX
+        posYBox.value = txtPosY
+        var mousePos = getMousePos(myCanvas, e);
+        txtPosX = mousePos.x
+        txtPosY = mousePos.y
+
+        var startNum = getStartNum()
+        var shotTitle = getShotTitle(startNum)
+        previewText(shotTitle);
     }
+}
+
+function changePos() {
+    txtPosX = getPosXBox()
+    txtPosY = getPosYBox()
+    var startNum = getStartNum()
+    var shotTitle = getShotTitle(startNum)
+    previewText(shotTitle)
 }

@@ -10,7 +10,7 @@
 <body>
     <div class="container">
         <div class="columns">
-            <div class="column">
+<!--             <div class="column">
                 <div class="field">
                   <label class="label">Title</label>
                   <div class="control">
@@ -18,8 +18,8 @@
                   </div>
                 </div>
             </div>
-
-            <div class="column">
+ -->
+<!--             <div class="column">
                 <div class="field">
                   <label class="label">BG Color</label>
                   <div class="control">
@@ -27,35 +27,7 @@
                   </div>
                 </div>
             </div>
-
-            <div class="column">
-                <div class="field">
-                  <label class="label">Font Color</label>
-                  <div class="control">
-                    <input type="color" id="fontColorBox" />
-                  </div>
-                </div>
-            </div>
-
-            <div class="column">
-                <div class="field">
-                  <label class="label">Font Size</label>
-                  <div class="control">
-                    <div class="select">
-                      <select id="fontSizeBox">
-                        <option>14</option>
-                        <option>18</option>
-                        <option>22</option>
-                        <option>24</option>
-                        <option>28</option>
-                        <option>32</option>
-                        <option>36</option>
-                      </select>
-                    </div>
-                  </div>
-                </div>
-            </div>
-
+ -->
             <div class="column">
                 <div class="field">
                   <label class="label">คำนำหน้า:</label>
@@ -91,23 +63,87 @@
                   </div>
                 </div>
             </div>
-        </div>
 
-        <div class="columns">
-            <div class="column is-2 is-offset-3">
+            <div class="column">
                 <div class="field">
-                  <label class="label">Width</label>
+                  <label class="label">Font Color</label>
                   <div class="control">
-                    <input class="input" id="widthBox" type="number" placeholder="3840px" max="10000" />
+                    <input type="color" id="fontColorBox" />
                   </div>
                 </div>
             </div>
 
-            <div class="column is-2">
+            <div class="column">
+                <div class="field">
+                  <label class="label">Font Size</label>
+                  <div class="control">
+                    <div class="select">
+                      <select id="fontSizeBox">
+                        <option>14</option>
+                        <option>18</option>
+                        <option>22</option>
+                        <option>24</option>
+                        <option>28</option>
+                        <option>32</option>
+                        <option>36</option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="columns">
+            <div class="column is-1">
+                <div class="field">
+                  <label class="label">X</label>
+                  <div class="control">
+                    <input class="input" id="posXBox" type="number" placeholder="0" />
+                  </div>
+                </div>
+            </div>
+
+            <div class="column is-1">
+                <div class="field">
+                  <label class="label">Y</label>
+                  <div class="control">
+                    <input class="input" id="posYBox" type="number" placeholder="0" />
+                  </div>
+                </div>
+            </div>
+
+            <div class="column is-1">
+                <div class="field">
+                  <label class="label">Width</label>
+                  <div class="control">
+                    <input class="input" id="widthBox" type="number" placeholder="3840" max="10000" />
+                  </div>
+                </div>
+            </div>
+
+            <div class="column is-1">
                 <div class="field">
                   <label class="label">Height</label>
                   <div class="control">
-                    <input class="input" id="heightBox" type="number" placeholder="2160px" max="10000" />
+                    <input class="input" id="heightBox" type="number" placeholder="2160" max="10000" />
+                  </div>
+                </div>
+            </div>
+
+            <div class="column is-1">
+                <div class="field">
+                  <label class="label">Vdo Width</label>
+                  <div class="control">
+                    <input class="input" id="vdoWidthBox" type="number" placeholder="3840" />
+                  </div>
+                </div>
+            </div>
+
+            <div class="column is-1">
+                <div class="field">
+                  <label class="label">Vdo Height</label>
+                  <div class="control">
+                    <input class="input" id="vdoHeightBox" type="number" placeholder="1632" />
                   </div>
                 </div>
             </div>
